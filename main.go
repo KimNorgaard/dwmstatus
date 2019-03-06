@@ -36,14 +36,13 @@ func main() {
 		psus, _ := psu.GetPowerSupplies()
 		st := psus.GetBatteriesStatus()
 		statusShort := string(statusRuneMap[st])
-		output := fmt.Sprintf("%.0f%%%s", psus.GetBatteriesCapacityPercent(), statusShort)
+		outp := fmt.Sprintf("%.0f%%%s", psus.GetBatteriesCapacityPercent(), statusShort)
 		if st == "Charging" || st == "Discharging" {
 			h, m, _ := psus.GetBatteriesCapacityTime()
-			output = fmt.Sprintf("%s [%dh:%dm]", output, h, m)
+			outp = fmt.Sprintf("%s [%dh:%dm]", outp, h, m)
 		}
-		output = fmt.Sprintf("%s  %s", output, t)
-		fmt.Println(output)
-		s := C.CString(output)
+		outp = fmt.Sprintf("%s  %s", outp, t)
+		s := C.CString(outp)
 		setStatus(s)
 		time.Sleep(time.Minute)
 	}
